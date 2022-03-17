@@ -20,6 +20,10 @@ public abstract class Piece {
 
     public abstract String getIcon();
 
+    public void setPiece(Piece piece){
+        
+    }
+
     public boolean isValidMove(Position newPosition){
         return newPosition.getCol() > 0 && newPosition.getCol() < 8 &&
                 newPosition.getRow() > 0 && newPosition.getRow() < 8;
