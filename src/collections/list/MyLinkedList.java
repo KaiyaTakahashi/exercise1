@@ -1,6 +1,8 @@
 package collections.list;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
  * Singly Linked-list (generic)
@@ -83,8 +85,20 @@ public class MyLinkedList<E> {
    * ex) tail.prev (second last node)
    */
   public E removeLast() {
-    // TODO: Implement Me;
-    return null;
+    final Node<E> h = head;
+    if (h == null) {
+      throw new NoSuchElementException("list is empty");
+    }
+
+    E data = h.data;
+    Node<E> tail = head;
+    for (int i = 0; i < size - 2; i++) {
+      tail = tail.next;
+    }
+    this.tail = tail;
+    tail.next = null;
+    size--;
+    return data;
   }
 
   // O(1)
@@ -154,8 +168,53 @@ public class MyLinkedList<E> {
    * @return
    */
   public boolean remove(E e) {
-    // TODO: Implement Me
-    return true;
+    if (head == null) {
+      throw new NoSuchElementException("list is empty");
+    }
+    Node<E> h = head;
+    int count = 0;
+    while(!h.data.equals(e)){
+        h = h.next;
+        count++;
+        if(count > size){
+          return false;
+        }
+    }
+    System.out.println(count);
+    h = head;
+    // remove first element
+    if(count == 0){
+      h = head;
+      if (h == null) {
+        throw new NoSuchElementException("list is empty");
+      }
+
+      E data = h.data;
+      Node<E> next = h.next;
+      h.data = null;
+      h.next = null;
+      head = next;
+      if (next == null) {
+        // only one element in the list
+        tail = null;
+      }
+      size--;
+      return true;
+    }
+    for(int i = 0; i < count - 1; i++){
+      h = h.next;
+    }
+    // remove last element
+    try {
+      h.next = h.next.next;
+    }catch(Exception exception){
+      for(int i = 0; i < count - 2;i++){
+        h = h.next;
+      }
+      h.next = h.next.next;
+    }
+    size--;
+    return false;
   }
 
   /**
@@ -165,7 +224,33 @@ public class MyLinkedList<E> {
    * @return
    */
   public boolean remove(int index) {
-    // TODO: Implement Me
+    Node<E> h = head;
+    if(index < 0 || index >= size){
+      return false;
+    // remove first element
+    }else if(index == 0){
+      if (h == null) {
+        throw new NoSuchElementException("list is empty");
+      }
+
+      E data = h.data;
+      Node<E> next = h.next;
+      h.data = null;
+      h.next = null;
+      head = next;
+      if (next == null) {
+        // only one element in the list
+        tail = null;
+      }
+      size--;
+      return true;
+    }else {
+      for (int i = 0; i < index - 1; i++) {
+        h = h.next;
+      }
+      h.next = h.next.next;
+      size--;
+    }
     return true;
   }
 
@@ -180,7 +265,26 @@ public class MyLinkedList<E> {
    * @return the index of the last occurrence of element e
    */
   public int lastIndexOf(E e) {
-    // TODO: Implement Me
+    Stack<E> stack = new Stack<>();
+    Node<E> h = head;
+    for (int i = 0; i < size; i++) {
+      stack.push(h.data);
+      h = h.next;
+    }
+    int count = 0;
+    try {
+      while (!stack.peek().equals(e)) {
+        count++;
+        stack.pop();
+      }
+    }catch (EmptyStackException exception){
+      return -1;
+    }
+    if(count > 0){
+      return size - count - 1;
+    }else if(stack.peek().equals(e)){
+      return size - 1;
+    }
     return -1;
   }
 
@@ -191,7 +295,17 @@ public class MyLinkedList<E> {
    * "C" -> "B" -> "A" -> null
    */
   public void reverse() {
-    // TODO: Implement Me
+    Stack<E> stack = new Stack<>();
+    Node<E> h = head;
+    for (int i = 0; i < size; i++){
+      stack.push(h.data);
+      h = h.next;
+    }
+    h = head;
+    for (int i = 0; i < size; i++){
+      h.data = stack.pop();
+      h = h.next;
+    }
   }
 
   // O(N)

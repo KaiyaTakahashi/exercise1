@@ -46,19 +46,11 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        //To do
-//        try {
-//            if (a.length > this.size) {
-//                for (int i = 0; i < this.size; i++) {
-//                    a[i] = (T) this.get(i);
-//                }
-//            }else{
-//                List<T> b = Arrays.asList(a);
-//
-//            }
-//        }catch(NullPointerException | ArrayStoreException ignored){
-//        }
-        return a;
+        if (a.length < size) {
+            return (T[]) Arrays.copyOf(elementData, size, a.getClass());
+        }else{
+            return (T[]) Arrays.copyOf(elementData, a.length, a.getClass());
+        }
     }
 
     @Override
@@ -164,8 +156,18 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        // TODO: Exercise
-        return false;
+        Object[] frontArray = Arrays.copyOf(elementData, index);
+        Object[] backArray = Arrays.copyOfRange(elementData, index, size);
+        Object[] middleArray = c.toArray();
+        if(middleArray.length == 0){
+            return false;
+        }
+        Object[] fullArray = new Object[frontArray.length + middleArray.length + backArray.length];
+        System.arraycopy(frontArray, 0, fullArray, 0, frontArray.length);
+        System.arraycopy(middleArray, 0, fullArray, frontArray.length, middleArray.length);
+        System.arraycopy(backArray, 0, fullArray, frontArray.length +middleArray.length, backArray.length);
+        elementData = fullArray;
+        return true;
     }
 
     @Override
@@ -193,8 +195,24 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO: Exercise
-        return false;
+        int count;
+        Object[] a = c.toArray();
+        try {
+            for(int i = 0; i < size; i++) {
+                count = 0;
+                for(int j = 0; j < c.size(); j++){
+                    if(a[j].equals(elementData[i])){
+                        count++;
+                    }
+                }
+                if(count == 0){
+                    elementData[i] = null;
+                }
+            }
+        }catch(ClassCastException | NullPointerException e){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -252,13 +270,21 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        // TODO: Exercise
+        for(int i = 0; i < size; i++){
+            if(elementData[i].equals(o)){
+                return i;
+            }
+        }
         return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO: Exercise
+        for (int i = size - 1; i >= 0; i--){
+            if(elementData[i].equals(o)){
+                return i;
+            }
+        }
         return -1;
     }
 
@@ -275,5 +301,12 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "MyArrayList{" +
+                "elementData=" + Arrays.toString(elementData) +
+                '}';
     }
 }
