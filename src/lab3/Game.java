@@ -43,11 +43,11 @@ public class Game {
         board[7][2] = new Bishop(5, false);
         board[7][5] = new Bishop(5, false);
 
-        board[0][4] = new Queen(5, true);
-        board[7][4] = new Queen(5, false);
+        board[0][3] = new Queen(5, true);
+        board[7][3] = new Queen(5, false);
 
-        board[0][3] = new King(5, true);
-        board[7][3] = new King(5, false);
+        board[0][4] = new King(5, true);
+        board[7][4] = new King(5, false);
     }
 
     public Piece[][] getBoard() {

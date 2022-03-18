@@ -22,9 +22,9 @@ public class Knight extends Piece{
     @Override
     public String getIcon() {
         if (this.isWhite()) {
-            return "♝";
+            return "♞";
         }else{
-            return "♗";
+            return "♘";
         }
     }
 

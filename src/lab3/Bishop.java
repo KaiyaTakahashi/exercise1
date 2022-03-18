@@ -23,9 +23,9 @@ public class Bishop extends Piece{
     @Override
     public String getIcon() {
         if (this.isWhite()) {
-            return "♜";
+            return "♝";
         }else{
-            return "♖";
+            return "♗";
         }
     }
 
