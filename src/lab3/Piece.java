@@ -1,5 +1,7 @@
 package lab3;
 
+import java.util.ArrayList;
+
 /**
  * @author Kaiya Takahashi
  */
@@ -16,17 +18,27 @@ public abstract class Piece {
         this.isWhite = isWhite;
     }
 
-    public abstract void move();
+    public abstract boolean move(Position newPosition, Piece[][] board);
 
     public abstract String getIcon();
 
     public void setPiece(Piece piece){
-        
     }
 
-    public boolean isValidMove(Position newPosition){
-        return newPosition.getCol() > 0 && newPosition.getCol() < 8 &&
-                newPosition.getRow() > 0 && newPosition.getRow() < 8;
+    public abstract boolean isValidMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger);
+
+    public String numberToAlphabet(int row){
+        switch (row){
+            case 0 -> { return "a";}
+            case 1 -> { return "b";}
+            case 2 -> { return "c";}
+            case 3 -> { return "d";}
+            case 4 -> { return "e";}
+            case 5 -> { return "f";}
+            case 6 -> { return "g";}
+            case 7 -> { return "h";}
+            default -> {return "";}
+        }
     }
 
     @Override
@@ -39,8 +51,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "value=" + value +
+        return  "value=" + value +
                 ", isWhite=" + isWhite +
                 '}';
     }
@@ -59,5 +70,8 @@ public abstract class Piece {
 
     public boolean isWhite() {
         return isWhite;
+    }
+
+    public void move() {
     }
 }

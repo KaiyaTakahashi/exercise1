@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Game {
     private Piece[][] board;
+    private int turnChanger = 0;
+
 
     public Game(){
         board = new Piece[8][8];
@@ -59,16 +61,67 @@ public class Game {
     }
 
     /**
-     * Move piece from current position to destination
-     * @param pieceIndex takes in ArrayList from InputCollector,[originalCol, originalRow, destinationCol, destinationRow]
+     *
+     * @param pieceIndex
+     * @return
      */
-    public void setPiece(ArrayList<Integer> pieceIndex){
+    public boolean keepPlaying(ArrayList<Integer> pieceIndex){
+        boolean res = true;
         int originalCol = pieceIndex.get(0);
         int originalRow = pieceIndex.get(1);
         int destinationCol = pieceIndex.get(2);
         int destinationRow = pieceIndex.get(3);
-        this.board[destinationCol][destinationRow] = board[originalCol][originalRow];
-        this.board[originalCol][originalRow] = null;
+
+        //help command
+        if (originalRow == 9 && originalCol == 9 && destinationRow == 9 && destinationCol == 9){
+            printHelpMenu();
+            turnChanger++;
+        } else if (originalRow == 9 && originalCol == 0 && destinationRow == 9 && destinationCol == 0) {
+            //quit command
+            System.out.println("See ya");
+            res = false;
+        } else if (originalRow == 9 && originalCol == 1 && destinationRow == 9 && destinationCol == 1) {
+            //resign command
+            System.out.println("------ Game over ------");
+            if (turnWhite()){
+                System.out.println("Black won by resignation");
+            } else {
+                System.out.println("White won by resignation");
+            }
+            res = false;
+
+        } else {
+            setPiece(pieceIndex);
+        }
+        return res;
+    }
+
+    public boolean turnWhite(){
+        boolean res;
+        res = turnChanger % 2 == 0;
+        return res;
+    }
+
+    /**
+     * Move piece from current position to destination
+     */
+    public void setPiece(ArrayList<Integer> pieceIndex){
+        int originalCol1 = pieceIndex.get(0);
+        int originalRow1 = pieceIndex.get(1);
+        int destinationCol1 = pieceIndex.get(2);
+        int destinationRow1 = pieceIndex.get(3);
+        Piece tempPiece = this.board[originalCol1][originalRow1];
+        if (tempPiece.isValidMove(pieceIndex, this.board, this.turnChanger)) {
+            this.board[destinationCol1][destinationRow1] = board[originalCol1][originalRow1];
+            this.board[originalCol1][originalRow1] = null;
+            System.out.println("Nice move");
+            System.out.println();
+        }else{
+            System.out.println();
+            System.out.println("You can't move there");
+            InputCollector inputCollector = new InputCollector();
+            keepPlaying(inputCollector.pickAndMove());
+        }
     }
 
     /**
@@ -78,15 +131,44 @@ public class Game {
         for(int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if(board[i][j] == null){
-                    System.out.print("・ ");
+                    System.out.print(". ");
                 }else{
                     System.out.print(board[i][j].getIcon() + " ");
                 }
             }
             System.out.println(" " + i);
         }
+        System.out.print("a b c d e f g h");
         System.out.println();
-        System.out.print("a　b　c　d　e　f　g　h");
+    }
+
+//    /**
+//     * Print board method    !!!!only for my laptop!!!!
+//     */
+//    public void printBoard(){
+//        for(int i = 0; i < 8; i++){
+//            for (int j = 0; j < 8; j++){
+//                if(board[i][j] == null){
+//                    System.out.print("・ ");
+//                }else{
+//                    System.out.print(board[i][j].getIcon() + " ");
+//                }
+//            }
+//            System.out.println(" " + i);
+//        }
+//        System.out.println();
+//        System.out.print("a　b　c　d　e　f　g　h");
+//        System.out.println();
+//    }
+
+
+    public void printHelpMenu(){
+        System.out.println();
+        System.out.println("type 'help' for help");
+        System.out.println("type 'resign' to resign");
+        System.out.println("type 'moves' to list all possible moves");
+        System.out.println("type 'quit' to stop this app");
+        System.out.println("type a square (e.g. a2, b1...) to list all possible moves for that square");
         System.out.println();
     }
 
@@ -94,15 +176,31 @@ public class Game {
      * THE MAIN GAME FLOW
      */
     public void run(){
-        while (true) {
-            InputCollector inputCollector = new InputCollector();
 
-            // get user input (ex, e6e4)  <- need a validation
-            setPiece(inputCollector.pickAndMove());
+        while (true) {
             // print board
             printBoard();
+            System.out.println();
+
+            if (turnWhite()){
+                System.out.println("White to move");
+            } else {
+                System.out.println("Black to move");
+            }
+
+            // check user input (ex, e6e4)  <- need a validation
+            InputCollector inputCollector = new InputCollector();
+            if (!keepPlaying(inputCollector.pickAndMove())){
+                break;
+            };
+
             // win check
-            // change turn
+
+
+
+
+            turnChanger++;
+
         }
     }
 }
