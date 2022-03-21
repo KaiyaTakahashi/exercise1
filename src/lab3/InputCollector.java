@@ -146,6 +146,41 @@ public class InputCollector {
                 if (piecePosition.length() > 6) {
                     System.out.println("Invalid input");
                     validInput = false;
+                } else if(piecePosition.length() == 2){
+                    char tempOriginalRow = piecePosition.charAt(0);
+                    char tempOriginalCol = piecePosition.charAt(1);
+                    // for printing possible movement
+                    switch (tempOriginalRow) {
+                        case 'a' -> originalRow = 0;
+                        case 'b' -> originalRow = 1;
+                        case 'c' -> originalRow = 2;
+                        case 'd' -> originalRow = 3;
+                        case 'e' -> originalRow = 4;
+                        case 'f' -> originalRow = 5;
+                        case 'g' -> originalRow = 6;
+                        case 'h' -> originalRow = 7;
+                        case 'z' -> originalRow = 9;
+                        default -> {
+                            validInput = false;
+                        }
+                    }
+                    switch (tempOriginalCol) {
+                        case '0' -> originalCol = 0;
+                        case '1' -> originalCol = 1;
+                        case '2' -> originalCol = 2;
+                        case '3' -> originalCol = 3;
+                        case '4' -> originalCol = 4;
+                        case '5' -> originalCol = 5;
+                        case '6' -> originalCol = 6;
+                        case '7' -> originalCol = 7;
+                        case '9' -> originalCol = 9;
+                        default -> {
+                            validInput = false;
+                        }
+                    }
+                    pieceIndex.add(originalCol);
+                    pieceIndex.add(originalRow);
+                    return pieceIndex;
                 } else {
                     char tempOriginalRow = piecePosition.charAt(0);
                     char tempOriginalCol = piecePosition.charAt(1);
@@ -172,8 +207,6 @@ public class InputCollector {
                         tempDestinationRow = 'z';
                         tempDestinationCol = '1';
                     }
-
-
                     switch (tempOriginalRow) {
                         case 'a' -> originalRow = 0;
                         case 'b' -> originalRow = 1;

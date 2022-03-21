@@ -87,20 +87,71 @@ public class Knight extends Piece{
 
     @Override
     public boolean isValidMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
-//        if(!super.isValidMove(position, board)){
-//            return false;
-//        }
-//        if(((Math.abs(newPosition.getCol() - this.position.getCol()) == 1) &&
-//                (Math.abs(newPosition.getRow() - this.position.getRow()) == 2)) ||
-//                ((Math.abs(newPosition.getRow() - this.position.getRow()) == 1) &&
-//                        (Math.abs(newPosition.getCol() - this.position.getCol()) == 2)))
-//        {
-//            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].isWhite() != isWhite();
-//        }
-//        else{
-//            return false;
-//        }
-        return true;
+        // check if player picks the valid colour piece
+        if (!this.isWhite()) {
+            if (turnChanger % 2 == 0) {
+                return false;
+            }
+        } else {
+            if (turnChanger % 2 != 0) {
+                return false;
+            }
+        }
+
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        int destinationCol = pieceIndex.get(2);
+        int destinationRow = pieceIndex.get(3);
+
+        if ((originalCol + 2 == destinationCol && originalRow - 1 == destinationRow) ||
+           (originalCol + 2 == destinationCol && originalRow + 1 == destinationRow) ||
+           (originalCol - 2 == destinationCol && originalRow - 1 == destinationRow) ||
+           (originalCol - 2 == destinationCol && originalRow + 1 == destinationRow)
+        ){
+            // when it is white or when it is black
+            if (turnChanger % 2 == 0){
+                return board[destinationCol][destinationRow] == null || !board[destinationCol][destinationRow].isWhite();
+            }else{
+                return board[destinationCol][destinationRow] == null || board[destinationCol][destinationRow].isWhite();
+            }
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        ArrayList<String> possibleMove = new ArrayList<>();
+        if (turnChanger % 2 == 0){
+            try {
+                if (board[originalCol + 2][originalRow - 1] == null || !board[originalCol + 2][originalRow - 1].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol + 2) + "]");
+                }
+            }catch (Exception ignored){
+            }
+            try {
+                if (board[originalCol + 2][originalRow + 1] == null || !board[originalCol + 2][originalRow + 1].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow + 1) + (originalCol + 2) + "]");
+                }
+            }catch (Exception ignored){
+            }
+        }else{
+            try {
+                if (board[originalCol - 2][originalRow - 1] == null || board[originalCol - 2][originalRow - 1].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol - 2) + "]");
+                }
+            }catch (Exception ignored){
+            }
+            try {
+                if (board[originalCol - 2][originalRow + 1] == null || board[originalCol - 2][originalRow + 1].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow + 1) + (originalCol - 2) + "]");
+                }
+            }catch (Exception ignored){
+            }
+        }
+        System.out.println("Possible move: " + possibleMove);
     }
 
     @Override

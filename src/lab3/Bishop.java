@@ -226,6 +226,85 @@ public class Bishop extends Piece{
     }
 
     @Override
+    public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        boolean stop = false;
+        ArrayList<String> possibleMove = new ArrayList<>();
+        // go up right
+        while (originalCol != 0 && originalRow != 7 && !stop){
+            originalCol--;
+            originalRow++;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go down left
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalCol !=7 && originalRow != 0 && !stop){
+            originalCol++;
+            originalRow--;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go up left
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalCol !=0 && originalRow != 0 && !stop){
+            originalCol--;
+            originalRow--;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go down right
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalCol !=7 && originalRow != 7 && !stop){
+            originalCol++;
+            originalRow++;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+
+        System.out.println("Possible move: " + possibleMove);
+    }
+
+    @Override
     public String numberToAlphabet(int row) {
         return super.numberToAlphabet(row);
     }

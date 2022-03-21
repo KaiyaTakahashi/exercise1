@@ -67,8 +67,34 @@ public class Game {
      */
     public boolean keepPlaying(ArrayList<Integer> pieceIndex){
         boolean res = true;
+        boolean sameColour;
         int originalCol = pieceIndex.get(0);
         int originalRow = pieceIndex.get(1);
+        if (pieceIndex.size() == 2){
+            Piece tempPiece = board[originalCol][originalRow];
+            try {
+                sameColour = true;
+                // check if player picks the valid colour piece
+                if (!tempPiece.isWhite()) {
+                    if (turnChanger % 2 == 0) {
+                        System.out.println("Wrong piece");
+                        sameColour = false;
+                    }
+                } else {
+                    if (turnChanger % 2 != 0) {
+                        System.out.println("Wrong piece");
+                        sameColour = false;
+                    }
+                }
+                if (sameColour) {
+                    tempPiece.printPossibleMove(pieceIndex, board, turnChanger);
+                }
+            }catch (NullPointerException e){
+                System.out.println("Invalid input");
+            }
+            turnChanger++;
+            return true;
+        }
         int destinationCol = pieceIndex.get(2);
         int destinationRow = pieceIndex.get(3);
 
@@ -124,42 +150,42 @@ public class Game {
         }
     }
 
-    /**
-     * Print board method
-     */
-    public void printBoard(){
-        for(int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                if(board[i][j] == null){
-                    System.out.print(". ");
-                }else{
-                    System.out.print(board[i][j].getIcon() + " ");
-                }
-            }
-            System.out.println(" " + i);
-        }
-        System.out.print("a b c d e f g h");
-        System.out.println();
-    }
-
 //    /**
-//     * Print board method    !!!!only for my laptop!!!!
+//     * Print board method
 //     */
 //    public void printBoard(){
 //        for(int i = 0; i < 8; i++){
 //            for (int j = 0; j < 8; j++){
 //                if(board[i][j] == null){
-//                    System.out.print("・ ");
+//                    System.out.print(". ");
 //                }else{
 //                    System.out.print(board[i][j].getIcon() + " ");
 //                }
 //            }
 //            System.out.println(" " + i);
 //        }
-//        System.out.println();
-//        System.out.print("a　b　c　d　e　f　g　h");
+//        System.out.print("a b c d e f g h");
 //        System.out.println();
 //    }
+
+    /**
+     * Print board method    !!!!only for my laptop!!!!
+     */
+    public void printBoard(){
+        for(int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if(board[i][j] == null){
+                    System.out.print("・ ");
+                }else{
+                    System.out.print(board[i][j].getIcon() + " ");
+                }
+            }
+            System.out.println(" " + i);
+        }
+        System.out.println();
+        System.out.print("a　b　c　d　e　f　g　h");
+        System.out.println();
+    }
 
 
     public void printHelpMenu(){

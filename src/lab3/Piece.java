@@ -41,6 +41,8 @@ public abstract class Piece {
         }
     }
 
+    public abstract void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger);
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

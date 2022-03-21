@@ -183,6 +183,11 @@ public class Pawn extends Piece {
         return true;
     }
 
+    @Override
+    public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
+
+    }
+
     public void promote(Piece newPiece) {
         this.promoted = true;
         this.newPiece = newPiece;

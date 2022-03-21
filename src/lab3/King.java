@@ -77,22 +77,124 @@ public class King extends Piece {
         return true;
     }
 
-
     @Override
     public boolean isValidMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
-        //        if (!super.isValidMove(position, board)) {
-//            return false;
-//        }
-//
-//        Piece to = board[newPosition.getRow()][newPosition.getCol()];
-//
-//        if (to != null && to.isWhite() == isWhite()) {
-//            return false;
-//        }
-//
-//        return (Math.abs(newPosition.getCol() - this.position.getCol()) <= 1) &&
-//                (Math.abs(newPosition.getRow() - this.position.getRow()) <= 1);
-        return true;
+        // check if player picks the valid colour piece
+        if (!this.isWhite()) {
+            if (turnChanger % 2 == 0) {
+                return false;
+            }
+        } else {
+            if (turnChanger % 2 != 0) {
+                return false;
+            }
+        }
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        int destinationCol = pieceIndex.get(2);
+        int destinationRow = pieceIndex.get(3);
+        if (Math.abs(destinationRow - originalRow) <= 1 && Math.abs(destinationCol - originalCol) <= 1){
+            // check if there is any piece on destination
+            if (board[destinationCol][destinationRow] == null){
+                return true;
+            }else {
+                if (board[originalCol][originalRow].isWhite()) {
+                    // check if it is different colour from picked piece
+                    return !board[destinationCol][destinationRow].isWhite();
+                } else {
+                    return board[destinationCol][destinationRow].isWhite();
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        ArrayList<String> possibleMove = new ArrayList<>();
+        try {
+            if (board[originalCol - 1][originalRow - 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol- 1) + "]");
+            }
+            if((board[originalCol - 1][originalRow - 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol - 1][originalRow - 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol- 1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol - 1][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol - 1) + "]");
+            }
+            if((board[originalCol - 1][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol - 1][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol - 1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol - 1][originalRow + 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow + 1) + (originalCol-1) + "]");
+            }
+            if((board[originalCol - 1][originalRow + 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol - 1][originalRow + 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow + 1) + (originalCol-1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol][originalRow - 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow -1) + originalCol + "]");
+            }
+            if((board[originalCol][originalRow - 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow - 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow -1) + originalCol + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol][originalRow + 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow + 1) + originalCol + "]");
+            }
+            if((board[originalCol][originalRow + 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow + 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow + 1) + originalCol + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol + 1][originalRow - 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol+1) + "]");
+            }
+            if((board[originalCol + 1][originalRow - 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol + 1][originalRow - 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow - 1) + (originalCol+1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol + 1][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol+1) + "]");
+            }
+            if((board[originalCol + 1][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol + 1][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol+1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        try {
+            if (board[originalCol + 1][originalRow + 1] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow+1) + (originalCol+1) + "]");
+            }
+            if((board[originalCol + 1][originalRow + 1].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol + 1][originalRow + 1].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow+1) + (originalCol+1) + "]");
+            }
+        }catch (Exception ignored){
+        }
+        System.out.println("Possible move: " + possibleMove);
     }
 
     @Override

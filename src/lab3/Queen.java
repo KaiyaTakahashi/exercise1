@@ -215,6 +215,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
+
+    }
+
+    @Override
     public void setValue(int value) {
         super.setValue(value);
     }
