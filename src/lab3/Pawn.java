@@ -150,42 +150,63 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isValidMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
-//        if (!super.isValidMove(position, board)) {
-//            return false;
-//        }
-//
-//        int newCol = newPosition.getCol();
-//        int newRow = newPosition.getRow();
-//        int col = this.position.getCol();
-//        int row = this.position.getRow();
-//        Piece pawn = board[newRow][newCol];
-//        if (pawn != null) {
-//            if (pawn.isWhite() == this.isWhite()) {
-//                return false;
-//            }
-//        }
-//        if (pawn == null) {
-//            if (this.isWhite()) {
-//                return col == newCol && ((newRow == row - 1) || (row == 6 && newRow == row - 2));
-//            } else {
-//                return col == newCol && ((newRow == row + 1) || (row == 1 && newRow == row + 2));
-//            }
-//        } else {
-//
-//            boolean a = (newCol == col + 1) || (newCol == col - 1);
-//            if (this.isWhite()) {
-//                return newRow == row - 1 && a;
-//            } else {
-//                return newRow == row + 1 && a;
-//            }
-//
-//        }
-        return true;
+        // check if player picks the valid colour piece
+        if (!this.isWhite()) {
+            if (turnChanger % 2 == 0) {
+                return false;
+            }
+        } else {
+            if (turnChanger % 2 != 0) {
+                return false;
+            }
+        }
+
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        int destinationCol = pieceIndex.get(2);
+        int destinationRow = pieceIndex.get(3);
+
+        if (originalRow == destinationRow && Math.abs(originalCol - destinationCol) == 1) {
+            if (originalCol + 1 > 7 || originalCol - 1 < 0) {
+                return false;
+            } else {
+                if (turnChanger % 2 == 0) {
+                    if (originalCol < destinationCol) {
+                        return board[destinationCol][destinationRow] == null || !board[destinationCol][destinationRow].isWhite();
+                    }
+                } else {
+                    if (originalCol > destinationCol) {
+                        return board[destinationCol][destinationRow] == null || board[destinationCol][destinationRow].isWhite();
+                    }
+                }
+            }
+        }else{
+            return false;
+        }
+        return false;
     }
 
     @Override
     public void printPossibleMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
-
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        ArrayList<String> possibleMove = new ArrayList<>();
+        if (turnChanger % 2 == 0){
+            try {
+                if (board[originalCol + 1][originalRow] == null || !board[originalCol + 1][originalRow].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol + 1) + "]");
+                }
+            }catch (Exception ignored){
+            }
+        }else{
+            try {
+                if (board[originalCol - 1][originalRow] == null || board[originalCol - 1][originalRow].isWhite()) {
+                    possibleMove.add("[" + numberToAlphabet(originalRow) + (originalCol - 1) + "]");
+                }
+            }catch (Exception ignored){
+            }
+        }
+        System.out.println("Possible move: " + possibleMove);
     }
 
     public void promote(Piece newPiece) {

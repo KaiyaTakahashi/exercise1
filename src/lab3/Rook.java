@@ -80,47 +80,93 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValidMove(ArrayList<Integer> pieceIndex, Piece[][] board, int turnChanger) {
-//
-//        if (!super.isValidMove(position, board)) {
-//            return false;
-//        }
-//
-//        if (newPosition.getCol() == this.position.getCol()) {
-//            int minRow;
-//            int maxRow;
-//            if (newPosition.getRow() >= this.position.getRow()) {
-//                minRow = this.position.getRow();
-//                maxRow = newPosition.getRow();
-//            } else {
-//                minRow = newPosition.getRow();
-//                maxRow = this.position.getRow();
-//            }
-//            for (int r = minRow + 1; r < maxRow; r++) {
-//                if (board[r][this.position.getCol()] != null) {
-//                    return false;
-//                }
-//            }
-//            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].isWhite() != isWhite();
-//        } else if (newPosition.getRow() == this.position.getRow()) {
-//            int minCol;
-//            int maxCol;
-//            if (newPosition.getCol() >= this.position.getCol()) {
-//                minCol = this.position.getCol();
-//                maxCol = newPosition.getCol();
-//            } else {
-//                minCol = newPosition.getCol();
-//                maxCol = this.position.getCol();
-//            }
-//            for (int c = minCol + 1; c < maxCol; c++) {
-//                if (board[this.position.getRow()][c] != null) {
-//                    return false;
-//                }
-//            }
-//            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].isWhite() != isWhite();
-//        } else {
-//            return false;
-//        }
-        return true;
+        int originalCol = pieceIndex.get(0);
+        int originalRow = pieceIndex.get(1);
+        int destinationCol = pieceIndex.get(2);
+        int destinationRow = pieceIndex.get(3);
+
+        // check if player picks the valid colour piece
+        if (!this.isWhite()) {
+            if (turnChanger % 2 == 0) {
+                return false;
+            }
+        } else {
+            if (turnChanger % 2 != 0) {
+                return false;
+            }
+        }
+
+        // check if destination is valid
+        // check if current position and destination are same position
+        if (originalRow == destinationRow && originalCol == destinationCol) {
+            return false;
+        }
+
+        // go right
+        if (originalRow < destinationRow && originalCol == destinationCol){
+            for (int i = originalRow+1; i <= destinationRow; i++){
+                if (board[originalCol][i] != null){
+                    if (i == destinationRow){
+                        if (board[originalCol][i].isWhite()){
+                            return turnChanger % 2 != 0;
+                        }else{
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go left
+        if (originalRow > destinationRow && originalCol == destinationCol){
+            for (int i = originalRow-1; i >= destinationRow; i--){
+                if (board[originalCol][i] != null){
+                    if (i == destinationRow){
+                        if (board[originalCol][i].isWhite()){
+                            return turnChanger % 2 != 0;
+                        }else{
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go down
+        if (originalRow == destinationRow && originalCol < destinationCol){
+            for (int i = originalCol+1; i <= destinationCol; i++){
+                if (board[i][originalRow] != null){
+                    if (i == destinationCol) {
+                        if (board[i][originalRow].isWhite()) {
+                            return turnChanger % 2 != 0;
+                        } else {
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go up
+        if (originalRow == destinationRow && originalCol > destinationCol){
+            for (int i = originalCol-1; i >= destinationCol; i--){
+                if (board[i][originalRow] != null){
+                    if (i == destinationCol) {
+                        if (board[i][originalRow].isWhite()) {
+                            return turnChanger % 2 != 0;
+                        } else {
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

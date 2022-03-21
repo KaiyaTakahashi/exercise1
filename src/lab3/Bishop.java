@@ -82,25 +82,7 @@ public class Bishop extends Piece{
                     } else {
                         if ((board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
                                 (!(board[movableCol][movableRow].isWhite()) && turnChanger % 2 == 0)) {
-                            if (movableCol == destinationCol || movableRow == destinationRow) return true;
-                            System.out.print("Possible move to go up right: ");
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol++;
-                                movableRow--;
-                            }
-                        } else if ((!board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
-                                (board[movableCol][movableRow].isWhite() && turnChanger % 2 == 0)) {
-                            System.out.print("Possible move to go up right: ");
-                            movableCol++;
-                            movableRow--;
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol++;
-                                movableRow--;
-                            }
+                            return movableCol == destinationCol || movableRow == destinationRow;
                         }
                         return false;
                     }
@@ -119,25 +101,7 @@ public class Bishop extends Piece{
                     } else {
                         if ((board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
                                 (!(board[movableCol][movableRow].isWhite()) && turnChanger % 2 == 0)) {
-                            if (movableCol == destinationCol || movableRow == destinationRow) return true;
-                            System.out.print("Possible move to go down left: ");
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol--;
-                                movableRow++;
-                            }
-                        } else if ((!board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
-                                (board[movableCol][movableRow].isWhite() && turnChanger % 2 == 0)) {
-                            System.out.print("Possible move to go down left: ");
-                            movableCol--;
-                            movableRow++;
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol--;
-                                movableRow++;
-                            }
+                            return movableCol == destinationCol || movableRow == destinationRow;
                         }
                         return false;
                     }
@@ -160,25 +124,7 @@ public class Bishop extends Piece{
                     } else {
                         if ((board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
                                 (!(board[movableCol][movableRow].isWhite()) && turnChanger % 2 == 0)) {
-                            if (movableCol == destinationCol || movableRow == destinationRow) return true;
-                            System.out.print("Possible move to go up left: ");
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol++;
-                                movableRow++;
-                            }
-                        } else if ((!board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
-                                (board[movableCol][movableRow].isWhite() && turnChanger % 2 == 0)) {
-                            System.out.print("Possible move to go up left: ");
-                            movableCol++;
-                            movableRow++;
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol++;
-                                movableRow++;
-                            }
+                            return movableCol == destinationCol || movableRow == destinationRow;
                         }
                         return false;
                     }
@@ -197,25 +143,7 @@ public class Bishop extends Piece{
                     } else {
                         if ((board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
                                 (!(board[movableCol][movableRow].isWhite()) && turnChanger % 2 == 0)) {
-                            if (movableCol == destinationCol || movableRow == destinationRow) return true;
-                            System.out.print("Possible move to go down left: ");
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol--;
-                                movableRow--;
-                            }
-                        } else if ((!board[movableCol][movableRow].isWhite() && turnChanger % 2 != 0) ||
-                                (board[movableCol][movableRow].isWhite() && turnChanger % 2 == 0)) {
-                            System.out.print("Possible move to go down left: ");
-                            movableCol--;
-                            movableRow--;
-                            while (movableCol != originalCol || movableRow != originalRow) {
-                                String alphabetRow = numberToAlphabet(movableRow);
-                                System.out.print("[" + alphabetRow + movableCol + "]");
-                                movableCol--;
-                                movableRow--;
-                            }
+                            return movableCol == destinationCol || movableRow == destinationRow;
                         }
                         return false;
                     }

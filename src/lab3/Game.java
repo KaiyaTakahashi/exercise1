@@ -137,16 +137,21 @@ public class Game {
         int destinationCol1 = pieceIndex.get(2);
         int destinationRow1 = pieceIndex.get(3);
         Piece tempPiece = this.board[originalCol1][originalRow1];
-        if (tempPiece.isValidMove(pieceIndex, this.board, this.turnChanger)) {
-            this.board[destinationCol1][destinationRow1] = board[originalCol1][originalRow1];
-            this.board[originalCol1][originalRow1] = null;
-            System.out.println("Nice move");
-            System.out.println();
-        }else{
-            System.out.println();
-            System.out.println("You can't move there");
-            InputCollector inputCollector = new InputCollector();
-            keepPlaying(inputCollector.pickAndMove());
+        try {
+            if (tempPiece.isValidMove(pieceIndex, this.board, this.turnChanger)) {
+                this.board[destinationCol1][destinationRow1] = board[originalCol1][originalRow1];
+                this.board[originalCol1][originalRow1] = null;
+                System.out.println("Nice move");
+                System.out.println();
+            } else {
+                System.out.println();
+                System.out.println("You can't move there");
+                InputCollector inputCollector = new InputCollector();
+                keepPlaying(inputCollector.pickAndMove());
+            }
+        }catch (NullPointerException e){
+            System.out.println("Invalid input");
+            turnChanger ++;
         }
     }
 
