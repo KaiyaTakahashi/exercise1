@@ -202,6 +202,72 @@ public class Queen extends Piece {
                 }
             }
         }
+        // same as rook
+
+        // go right
+        if (originalRow < destinationRow && originalCol == destinationCol){
+            for (int i = originalRow+1; i <= destinationRow; i++){
+                if (board[originalCol][i] != null){
+                    if (i == destinationRow){
+                        if (board[originalCol][i].isWhite()){
+                            return turnChanger % 2 != 0;
+                        }else{
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go left
+        if (originalRow > destinationRow && originalCol == destinationCol){
+            for (int i = originalRow-1; i >= destinationRow; i--){
+                if (board[originalCol][i] != null){
+                    if (i == destinationRow){
+                        if (board[originalCol][i].isWhite()){
+                            return turnChanger % 2 != 0;
+                        }else{
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go down
+        if (originalRow == destinationRow && originalCol < destinationCol){
+            for (int i = originalCol+1; i <= destinationCol; i++){
+                if (board[i][originalRow] != null){
+                    if (i == destinationCol) {
+                        if (board[i][originalRow].isWhite()) {
+                            return turnChanger % 2 != 0;
+                        } else {
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        // go up
+        if (originalRow == destinationRow && originalCol > destinationCol){
+            for (int i = originalCol-1; i >= destinationCol; i--){
+                if (board[i][originalRow] != null){
+                    if (i == destinationCol) {
+                        if (board[i][originalRow].isWhite()) {
+                            return turnChanger % 2 != 0;
+                        } else {
+                            return turnChanger % 2 == 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
         return false;
     }
 
@@ -362,6 +428,75 @@ public class Queen extends Piece {
                 possibleMove.add("[" + numberToAlphabet(originalRow+1) + (originalCol+1) + "]");
             }
         }catch (Exception ignored){
+        }
+        // same as rook
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        // go right
+        while (originalRow != 7 && !stop){
+            originalRow++;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go left
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalRow != 0 && !stop){
+            originalRow--;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go up
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalCol !=0 && !stop){
+            originalCol--;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
+        }
+        // go down
+        originalCol = pieceIndex.get(0);
+        originalRow = pieceIndex.get(1);
+        stop = false;
+        while (originalCol !=7 && !stop){
+            originalCol++;
+            if (board[originalCol][originalRow] == null) {
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+            }else if((board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (!(board[originalCol][originalRow].isWhite()) && turnChanger % 2 == 0)){
+                possibleMove.add("[" + numberToAlphabet(originalRow) + originalCol + "]");
+                stop = true;
+            }else if ((!board[originalCol][originalRow].isWhite() && turnChanger % 2 != 0) ||
+                    (board[originalCol][originalRow].isWhite() && turnChanger % 2 == 0)){
+                stop = true;
+            }
         }
         System.out.println("Possible move: " + possibleMove);
     }

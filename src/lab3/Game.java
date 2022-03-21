@@ -203,12 +203,37 @@ public class Game {
         System.out.println();
     }
 
+    public boolean winCheck(){
+        int count = 0;
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                try {
+                    if (board[i][j].equals(new King(1_000, true))) {
+                        count++;
+                    } else if (board[i][j].equals(new King(1_000, false))) {
+                        count--;
+                    }
+                }catch (NullPointerException ignored){
+                }
+            }
+        }
+        if (count == 0){
+            return false;
+        }else if (count == 1){
+            System.out.println("White win!");
+            return true;
+        }else {
+            System.out.println("Black win!");
+            return true;
+        }
+    }
+
     /**
      * THE MAIN GAME FLOW
      */
     public void run(){
-
-        while (true) {
+        boolean finishGame = false;
+        while (!finishGame) {
             // print board
             printBoard();
             System.out.println();
@@ -226,9 +251,7 @@ public class Game {
             };
 
             // win check
-
-
-
+            finishGame = winCheck();
 
             turnChanger++;
 
